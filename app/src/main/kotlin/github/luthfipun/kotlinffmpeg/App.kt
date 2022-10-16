@@ -3,16 +3,24 @@
  */
 package github.luthfipun.kotlinffmpeg
 
-import java.nio.file.Paths
-
-class App {
-    val greeting: String
-        get() {
-            return "Hello World!"
-        }
-}
 
 fun main() {
-    val path = Paths.get("").toAbsolutePath().toString()
-    println(path)
+
+    val fileURL = "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_30MB.mp4"
+    val outputName = System.currentTimeMillis().toString()
+
+    val videoCropping = VideoCropping.Builder()
+        .setFileName(fileUrl = fileURL)
+        .setOutputName(outputName = outputName)
+        .build()
+
+    videoCropping.startCrop(object : VideoCroppingListener {
+        override fun onComplete() {
+            println("Crop completed!")
+        }
+
+        override fun onError(e: Exception) {
+            println("Crop error : ${e.message}")
+        }
+    })
 }
